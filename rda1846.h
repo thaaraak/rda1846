@@ -27,7 +27,7 @@
   #define RDA_SEN 0
 #endif
 
-#if RDA_SEN 
+#if RDA_SEN
   #define RDA_ADDRESS  0b0101110 //0x2E
 #else
   #define RDA_ADDRESS  0x71 //0x71
@@ -38,8 +38,8 @@
 
 #define REG_CHIP_ID 0x00  	//Chip ID default:0x1846
 #define REG_MID 0x01 		//Metal Revision ID default:0x0007
-#define REG_ADC 0x03 		//default:0x2B51 
-							//BIT[12]tx_adc_reset_dr 1=enable direct reg 0=disable direct reg  
+#define REG_ADC 0x03 		//default:0x2B51
+							//BIT[12]tx_adc_reset_dr 1=enable direct reg 0=disable direct reg
 							//BIT[11]tx_adc_reset_reg 1=enable reset adc 0=disable reset adc
 #define REG_CLK_MODE 0x04
 #define REG_LDO_BYPASS 0x08 	//default:0x02A0
@@ -51,7 +51,7 @@
 #define REG_RF_BAND 0x0F
 #define REG_TUNING 0x15  //BIT[12:9]tuning_bit Tuning IF filter center freq & bw
 #define REG_GPIO 0x1F
-#define REG_PLL 0x24 //default:0x0001 
+#define REG_PLL 0x24 //default:0x0001
 					//BIT[15]pll_lock_det_sel BIT[14:13]reset_pll_lock_delay BIT[7]dsp_resetn_dr 6dsp_resetn_reg
 					//BIT[15] 1=bypass pll lock det function
 					//BIT[14:13] pll_lock_delay
@@ -69,7 +69,7 @@
 						//BIT[14] - xtal_mode 1=26MHz/13MHz 0=25.6MHz/12.8MHz
 						//BIT[13] - filter_band_sel Analog Filter Band 1=25khz 0=12.5khz
 						//BIT[12] - band_mode_sel DSP Band Mode Select 1=25khz 0=12.5khz
-						//BIT[11] - tail_elim_en 1=enable eliminate tail noise, 0= disable eliminate 
+						//BIT[11] - tail_elim_en 1=enable eliminate tail noise, 0= disable eliminate
 						//BIT[10] - direct_reg 1=enable direct reg 0=disable
 						//BIT[9:8] - other
 						//BIT[7] - mute 1=mute 0=no mute
@@ -95,7 +95,7 @@
 #define REG_VOX_H 0x41 //default:0x4006  BIT[6:0]voice_gain_tx
 #define REG_VOX_L 0x42
 #define REG_TX_DEVIATION 0x43
-#define REG_RX_VOL 0x44 //default:00FF 
+#define REG_RX_VOL 0x44 //default:00FF
 						//BIT[11:8] Voice digital gain after tx ADC down sample
 						//BIT[7:4] Analog DAC gain
 						//BIT[3:0] Digital Voice Gain
@@ -104,7 +104,7 @@
 #define REG_SQ_L 0x49
 #define REG_CTCSS_FREQ 0x4A
 #define REG_CTCSS_CODE_H 0x4B
-#define REG_CTCSS_CODE_L 0x4C 
+#define REG_CTCSS_CODE_L 0x4C
 #define REG_CTCSS_PHASE 0x4E //default:20C2
 #define REG_SQOUT_SEL 0x54
 #define REG_VOICE_FILT 0x58
@@ -150,13 +150,13 @@ struct RDACommand {
     MODE25KHz = 0x00,
     MODE125KHz = 0x01
   };
-  
+
   enum TX_VOICE_CHAN {
     MIC = 0x00,
 	INNERTONE2 = 0x01,
 	GPIO1CODE = 0x02
   };
-  
+
   enum BIAS_VOLTAGE {
     BIAS101V = 0x00,
 	BIAS105V = 0x01,
@@ -167,7 +167,7 @@ struct RDACommand {
 	BIAS245V = 0x20,
 	BIAS313V = 0x7F
   };
-  
+
   enum CTCSSPHASE {
     SHIFT120DEGREES = 0x00,
 	SHIFT180DEGREES = 0x01,
@@ -186,63 +186,63 @@ struct RDACommand {
 	CLK13MHZ,
 	CLK26MHZ
   };
-  
+
   enum GPIO7 {
     GP7_HIZ,
 	VOX,
 	GP7_LOW,
 	GP7_HIGH
   };
-  
+
   enum GPIO6 {
     GP6_HIZ,
     SQ,
 	GP6_LOW,
 	GP6_HIGH
   };
-  
+
   enum GPIO5 {
     GP5_HIZ,
 	TXON_RF,
 	GP5_LOW,
 	GP5_HIGH
   };
-  
+
   enum GPIO4 {
     GP4_HIZ,
 	RXON_RF,
 	GP4_LOW,
 	GP4_HIGH
   };
-  
+
   enum GPIO3 {
     GP3_HIZ,
 	SDO,
 	GP3_LOW,
 	GP3_HIGH
   };
-  
+
   enum GPIO2 {
     GP2_HIZ,
 	GP2_INT,
 	GP2_LOW,
 	GP2_HIGH
   };
-  
+
   enum GPIO1 {
     GP1_HIZ,
 	CODE_IO,
 	GP1_LOW,
 	GP1_HIGH
   };
-  
+
   enum GPIO0 {
     GP0_HIZ,
 	CSS_IOC,
 	GP0_LOW,
 	GP0_HIGH
   };
-  
+
   enum STMODE {
     TXON_RXONAUTO = 0x10,
 	RXONAUTO_TXONMANUAL = 0x01,
@@ -253,56 +253,48 @@ class RDA1846 {
 public:
 
 /*
-struct RDACommand RDAinit[28] = {  //init values from http://elazary.com
- { 0x30, 0x0001 }, 
- { 0x30, 0x0004 },
- { 0x04, 0x0FD0 },
- { 0x0B, 0x1A10 },
- { 0x2B, 0x32C8 },
- { 0x2C, 0x1964 },
- { 0x31, 0x3FC0 },
- { 0x32, 0x627E },
- { 0x33, 0x0AF2 },
- { 0x47, 0x3BEC },
- { 0x4F, 0x1040 }, 
- { 0x4E, 0x293A }, 
- { 0x56, 0x0652 }, 
- { 0x6E, 0x062D },
- { 0x70, 0x181B },
- { 0x71, 0x6C1E },
- { 0xFF, 0x0001 },
- { 0x05, 0x001F },
- { 0xFF, 0x0000 },
- { 0x3C, 0x0A78 },
- { 0x3D, 0x200B },
- { 0x1F, 0x0001 },
- { 0x0A, 0x0340 }, 
- { 0x02, 0x0698 },
- { 0x54, 0x1D40 },
- { 0x29, 0x0038 }, //145.525
- { 0x2A, 0x7BC4 }, //0000 0011 1111 0000
- { 0x0F, 0x3D24 },
 
+
+caliphaxable . <ghangrene@gmail.com>
+8:14 AM (44 minutes ago)
+to me
+
+struct RDACommand RDAinit[27] = {  //init values from http://elazary.com
+{ 0x30, 0x0004 },
+{ 0x04, 0x0FD0 },
+{ 0x0B, 0x1A10 },
+{ 0x2B, 0x32C8 },
+{ 0x2C, 0x1964 },
+{ 0x31, 0x3FC0 },
+{ 0x32, 0x627E },
+{ 0x33, 0x0AF2 },
+{ 0x47, 0x3BEC },
+{ 0x4F, 0x1040 },
+{ 0x4E, 0x293A },
+{ 0x56, 0x0652 },
+{ 0x6E, 0x062D },
+{ 0x70, 0x181B },
+{ 0x71, 0x6C1E },
+{ 0xFF, 0x0001 },
+{ 0x05, 0x001F },
+{ 0xFF, 0x0000 },
+{ 0x3C, 0x0A78 },
+{ 0x3D, 0x200B },
+{ 0x1F, 0x1001 },
+{ 0x0A, 0x0340 },
+{ 0x02, 0x0698 },
+{ 0x54, 0x1D40 },
+{ 0x29, 0x0038 },
+{ 0x2A, 0x7BC4 },
+{ 0x0F, 0x3D24 }
 };
-*/
 
-/*
-
-struct RDACommand RDAinit[29] = {  //init values from http://elazary.com
- { 0x30, 0x0001 }, 
- { 0x04, 0x0FD0 },
- { 0x2B, 0x3234 },
- { 0x2C, 0x191A },
- { 0x29, 0x0011 }, //145.525
- { 0x2A, 0xC3A8 } //145.525
-
-};
 */ 
 
 /*** ORIGINAL ***/
 
 struct RDACommand RDAinit[30] = {  //init values from http://elazary.com
- { 0x30, 0x0001 }, 
+ { 0x30, 0x0001 },
  { 0x30, 0x0004 },
  { 0x04, 0x0FD0 },
  { 0x0B, 0x1A10 },
@@ -311,9 +303,9 @@ struct RDACommand RDAinit[30] = {  //init values from http://elazary.com
  { 0x32, 0x627C },
  { 0x33, 0x0AF2 },
  { 0x47, 0x2C2F },
- { 0x4E, 0x293A }, 
+ { 0x4E, 0x293A },
  { 0x54, 0x1D4C },
- { 0x56, 0x0652 }, 
+ { 0x56, 0x0652 },
  { 0x6E, 0x062D },
  { 0x70, 0x1029 },
  { 0x7F, 0x0001 },
@@ -322,13 +314,13 @@ struct RDACommand RDAinit[30] = {  //init values from http://elazary.com
  { 0x30, 0x3006 },
  { 0x0A, 0x0400 },        //PA Bias 0000 0100 '00 00' 0000
  { 0x1F, 0x0000 },        //GPIO selection 0001 1110 1011 1001
- { 0x30, 0x3006 }, 
+ { 0x30, 0x3006 },
  { 0x0F, 0x6be4 },
  { 0x29, 0x0011 }, //145.525
  { 0x2A, 0xC3A8 }, //145.525
  { 0x48, 0x03FF }, //0000 0011 1111 0000
  { 0x49, 0x01b3 }, //0003
- { 0x3C, 0x0958 }, //0000 1001 0101 1000 
+ { 0x3C, 0x0958 }, //0000 1001 0101 1000
  { 0x43, 0x1F1F },
  { 0x30, 0x3006 },
  { 0x36, 0x1000 },
@@ -338,20 +330,20 @@ struct RDACommand RDAinit[30] = {  //init values from http://elazary.com
 /***/
 
 uint16_t dtmfTone[10][2] = { //init values from http://elazary.com
- { 5472, 3854 }, //0 
- { 4952, 2855 }, //1 
- { 5472, 2855 }, //2 
- { 6050, 2855 }, //3 
- { 4952, 3154 }, //4 
- { 5472, 3154 }, //5 
- { 6050, 3154 }, //6 
- { 4952, 3490 }, //7 
- { 5472, 3490 }, //8 
- { 6050, 3490 }, //9 
+ { 5472, 3854 }, //0
+ { 4952, 2855 }, //1
+ { 5472, 2855 }, //2
+ { 6050, 2855 }, //3
+ { 4952, 3154 }, //4
+ { 5472, 3154 }, //5
+ { 6050, 3154 }, //6
+ { 4952, 3490 }, //7
+ { 5472, 3490 }, //8
+ { 6050, 3490 }, //9
 };
 
 
-  
+
   void begin(void);
   void writeWord(uint16_t data, uint8_t reg);
   bool readWord(uint16_t *data, uint8_t reg);
@@ -413,12 +405,12 @@ uint16_t dtmfTone[10][2] = { //init values from http://elazary.com
   uint16_t getFlags(void);
   uint16_t getChipID(void);
   void reset(void);
-  
+
 protected:
 
 private:
   uint8_t _address;
-  
+
 };
 
 
