@@ -258,6 +258,7 @@ public:
 caliphaxable . <ghangrene@gmail.com>
 8:14 AM (44 minutes ago)
 to me
+Testing an add
 
 struct RDACommand RDAinit[27] = {  //init values from http://elazary.com
 { 0x30, 0x0004 },
@@ -289,7 +290,7 @@ struct RDACommand RDAinit[27] = {  //init values from http://elazary.com
 { 0x0F, 0x3D24 }
 };
 
-*/ 
+*/
 
 /*** ORIGINAL ***/
 
